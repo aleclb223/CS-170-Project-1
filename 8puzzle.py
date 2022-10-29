@@ -1,5 +1,4 @@
 
-import TreeNode
 import copy
 import heapq as min_heap_esque_queue #because it sort of acts like a min heap
 
@@ -54,6 +53,18 @@ class node:
     # Method used for priority queue based on the cost variable of the objects
     def __lt__(self, nxt):
         return self.cost < nxt.cost
+
+# calculate the number of misplaced tiles
+def calculateCost(mat, final) -> int:
+     
+    count = 0
+    for i in range(n):
+        for j in range(n):
+            if ((mat[i][j]) and
+                (mat[i][j] != final[i][j])):
+                count += 1
+                 
+    return count
 
 def newNode(mat, empty_tile_pos, new_empty_tile_pos, level, parent, final) -> node:
 
