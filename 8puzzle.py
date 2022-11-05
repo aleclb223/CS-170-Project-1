@@ -177,3 +177,21 @@ class State:
             directions.remove('Down')
 
         return directions
+    
+    # the actual movement using calculations
+    def expand(self,n):
+        x = self.state.index(0)
+        directions = self.check_if_possible(x,n)
+        children=[]
+        for direction in directions:
+            temp = self.state.copy()
+            if direction == 'Left':
+                temp[x], temp[x - 1] = temp[x - 1], temp[x]
+            elif direction == 'Right':
+                temp[x], temp[x + 1] = temp[x + 1], temp[x]
+            elif direction == 'Up':
+                temp[x], temp[x - n] = temp[x - n], temp[x]
+            elif direction == 'Down':
+                temp[x], temp[x + n] = temp[x + n], temp[x]
+            children.append(State(temp, self, direction, self.depth + 1, 1))
+        return children
