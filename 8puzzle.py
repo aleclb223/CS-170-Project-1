@@ -70,3 +70,34 @@ def AStar_search_man(given_state , n):
                 frontier.put((evaluation[1], counter, child)) # based on A* evaluation
                 AStar_search_man.maxq+=frontier.qsize()
     return
+
+def AStar_search_missing(given_state , n):
+    AStar_search_missing.frontier = PriorityQueue()
+    AStar_search_missing.explored = []
+    counter = 0
+    root = State(given_state, None, None, 0, 0)
+    evaluation = root.Misplaced_Tiles(n) # we can use Misplaced_Tiles() instead.
+    AStar_search_missing.frontier.put((evaluation[1], counter, root)) # based on A* evaluation
+    AStar_search_missing.maxq=0
+    print(evaluation)
+    while not AStar_search_missing.frontier.empty():
+        current_node = AStar_search_missing.frontier.get()
+        current_node = current_node[2]
+        AStar_search_missing.explored.append(current_node.state)
+        
+        current_node.print_state()
+        print('max queue size',counter)
+        
+        
+        #print(root.Misplaced_Tiles,'misplaced function')
+        if current_node.test():
+            return current_node.solve(), len(AStar_search_missing.explored)
+
+        children = current_node.expand(n)
+        for child in children:
+            if child.state not in AStar_search_missing.explored:
+                counter += 1
+                evaluation = child.Misplaced_Tiles(n) # we can use Misplaced_Tiles() instead.
+                AStar_search_missing.frontier.put((evaluation[1], counter, child)) # based on A* evaluation
+                AStar_search_missing.maxq+=AStar_search_missing.frontier
+    return
