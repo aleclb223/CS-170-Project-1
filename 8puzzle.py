@@ -101,3 +101,31 @@ def AStar_search_missing(given_state , n):
                 AStar_search_missing.frontier.put((evaluation[1], counter, child)) # based on A* evaluation
                 AStar_search_missing.maxq+=AStar_search_missing.frontier
     return
+
+####################
+##### 8 Puzzle #####
+####################
+
+# https://github.com/Pariasrz/N-Puzzle-solver-with-Search-Algorithms/blob/main/State.py
+# Used the template for main state, test, Misplaced tiles, and Manhattan
+# Expand and movement used.
+class State:
+    final_state=[1, 2, 3, 4, 5, 6, 7, 8, 0]
+    AStar_evaluation_man = None
+    AStar_evaluation_mis = None
+    heuristic = None
+    def __init__(self, state, parent, direction, depth, cost):
+        self.state = state
+        self.parent = parent
+        self.direction = direction
+        self.depth = depth
+        if parent:
+            self.cost = parent.cost + cost
+
+        else:
+            self.cost = cost
+
+    def test(self): # check if the given state is goal
+        if self.state == self.final_state:
+            return True
+        return False
