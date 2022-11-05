@@ -212,3 +212,56 @@ class State:
     def print_state(self):
         arr =np.reshape(self.state,(3,3))
         print(arr)
+        
+##################
+##### Driver #####
+##################
+
+#https://www.geeksforgeeks.org/8-puzzle-problem-using-branch-and-bound/
+#https://github.com/Pariasrz/N-Puzzle-solver-with-Search-Algorithms/blob/main/Main.py
+# Used templates solvable, inv_num
+def main():
+    #start = root
+    #make n an input 
+    n=3 # this is the puzzle dimension
+    root =[]
+    print("enter puzzle")
+    for i in range (0,n*n):
+        pz= int(input())
+        root.append(pz)
+    print("The starting is:",root)
+    c=int(input("Which algorithm? 1 for ucs, 2 for misplaced, 3 for manhattan \n"))
+    solvable(root)
+    if solvable(root):
+        print("Solvable, please wait. \n")
+        if c==1: # if choice is 1, run ucs search
+            time1 = time()
+            ucs_solution = ucs(root, 3)
+            ucs_time = time() - time1
+            print('ucs depth is ', len(ucs_solution[0]))
+            print('Number of expanded nodes is ', ucs_solution[1]-1)    
+            print('ucs Time:', ucs_time , "\n")
+            print(ucs.maxq, "max queue nodes")
+        
+        elif c==2: # if choice is 2, run missingtile search
+            time2=time()
+            missingtilesol=AStar_search_missing(root,n)
+            AStar_time_mis=time()-time2
+            print('A* mis depth is ', len(missingtilesol[0])-1)
+            print('Number of expanded nodes is ', missingtilesol[1])
+            
+            print('A* mis Time:', AStar_time_mis)
+            print(len(AStar_search_missing.explored-1), "explored nodes")
+            print(AStar_search_missing.maxq)
+        
+        elif c==3: # if choice is 3, run manhattan search
+            time4 = time()
+            AStar_solution = AStar_search_man(root, 3)
+            AStar_time = time() - time4
+            print('NEWYORK BABY Solution is ', len(AStar_solution[0]))
+            print('Number of expanded nodes is ', AStar_solution[1]-1)   
+            print('NEWYORK BABY Time:', AStar_time)
+            print(AStar_search_man.maxq)
+
+    else:
+        print("Not solvable")
