@@ -42,3 +42,31 @@ def ucs(given_state , n):
                 frontier.put(child)
                 ucs.maxq+=frontier.qsize()
     return
+
+# A* Manhattan Search implementation.
+def AStar_search_man(given_state , n):
+    frontier = PriorityQueue()
+    AStar_search_man.explored = []
+    counter = 0
+    root = State(given_state, None, None, 0, 0)
+    evaluation = root.Manhattan_Distance(n) # Here manhat. dist. 
+    frontier.put((evaluation[1], counter, root)) # based on A* evaluation
+    AStar_search_man.maxq=0
+
+    while not frontier.empty():
+        current_node = frontier.get()
+        current_node = current_node[2]
+        AStar_search_man.explored.append(current_node.state)
+        current_node.print_state()
+        
+        if current_node.test():
+            return current_node.solve(), len(AStar_search_man.explored)
+
+        children = current_node.expand(n)
+        for child in children:
+            if child.state not in AStar_search_man.explored:
+                counter += 1
+                evaluation = child.Manhattan_Distance(n) # we can use Misplaced_Tiles() instead.
+                frontier.put((evaluation[1], counter, child)) # based on A* evaluation
+                AStar_search_man.maxq+=frontier.qsize()
+    return
