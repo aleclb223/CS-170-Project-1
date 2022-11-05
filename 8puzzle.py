@@ -145,3 +145,20 @@ class State:
         self.greedy_evaluation = self.heuristic
             
         return(counter,self.greedy_evaluation,self.AStar_evaluation_mis)
+    
+    def Manhattan_Distance(self ,n): 
+        self.heuristic = 0
+        global h
+        for i in range(1 , n*n):
+            distance = abs(self.state.index(i) - self.final_state.index(i))
+            
+            # manhattan distance between the current state and goal state
+            self.heuristic = self.heuristic + distance/n + distance%n
+
+        self.greedy_evaluation = self.heuristic
+        
+        self.AStar_evaluation = self.heuristic + self.cost
+        print(self.AStar_evaluation)
+        
+        
+        return( self.greedy_evaluation, self.AStar_evaluation)
