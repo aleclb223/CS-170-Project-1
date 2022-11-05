@@ -71,6 +71,7 @@ def AStar_search_man(given_state , n):
                 AStar_search_man.maxq+=frontier.qsize()
     return
 
+
 def AStar_search_missing(given_state , n):
     AStar_search_missing.frontier = PriorityQueue()
     AStar_search_missing.explored = []
@@ -99,8 +100,11 @@ def AStar_search_missing(given_state , n):
                 counter += 1
                 evaluation = child.Misplaced_Tiles(n) # we can use Misplaced_Tiles() instead.
                 AStar_search_missing.frontier.put((evaluation[1], counter, child)) # based on A* evaluation
-                AStar_search_missing.maxq+=AStar_search_missing.frontier
+                AStar_search_missing.maxq+=AStar_search_missing.frontier.qsize()
     return
+
+
+
 
 ####################
 ##### 8 Puzzle #####
@@ -129,7 +133,7 @@ class State:
         if self.state == self.final_state:
             return True
         return False
-    
+
     def Misplaced_Tiles(self,n):
         counter =0
         self.heuristic = 0
@@ -145,7 +149,8 @@ class State:
         self.greedy_evaluation = self.heuristic
             
         return(counter,self.greedy_evaluation,self.AStar_evaluation_mis)
-    
+
+
     def Manhattan_Distance(self ,n): 
         self.heuristic = 0
         global h
@@ -162,7 +167,8 @@ class State:
         
         
         return( self.greedy_evaluation, self.AStar_evaluation)
-    
+
+
     # Movement
     # check if you can move a certain direction
     def check_if_possible(self,x,n):
@@ -177,8 +183,8 @@ class State:
             directions.remove('Down')
 
         return directions
-    
-    # the actual movement using calculations
+
+    # 
     def expand(self,n):
         x = self.state.index(0)
         directions = self.check_if_possible(x,n)
@@ -195,7 +201,7 @@ class State:
                 temp[x], temp[x + n] = temp[x + n], temp[x]
             children.append(State(temp, self, direction, self.depth + 1, 1))
         return children
-    
+
     # this is for node traversal
     def solve(self):
         solve = []
@@ -207,12 +213,15 @@ class State:
         solve = solve[:-1]
         solve.reverse()
         return solve
-    
+
     # reshapes the output for the current state of the matrix into a 3x3
     def print_state(self):
         arr =np.reshape(self.state,(3,3))
         print(arr)
-        
+
+
+
+
 ##################
 ##### Driver #####
 ##################
@@ -252,7 +261,7 @@ def main():
             print('Number of expanded nodes is ', missingtilesol[1])
             
             print('A* mis Time:', AStar_time_mis)
-            print(len(AStar_search_missing.explored-1), "explored nodes")
+            print(len(AStar_search_missing.explored)-1, "explored nodes")
             print(AStar_search_missing.maxq)
         
         elif c==3: # if choice is 3, run manhattan search
@@ -266,7 +275,7 @@ def main():
 
     else:
         print("Not solvable")
-        
+
 # inversions. function to count inversions in the array
 def inv_num(puzzle):
     inv = 0
