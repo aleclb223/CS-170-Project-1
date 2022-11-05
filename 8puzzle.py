@@ -162,3 +162,18 @@ class State:
         
         
         return( self.greedy_evaluation, self.AStar_evaluation)
+    
+    # Movement
+    # check if you can move a certain direction
+    def check_if_possible(self,x,n):
+        directions = ['Left', 'Right', 'Up', 'Down']
+        if x % n == 0: # if you are all the way to the left
+            directions.remove('Left')
+        if x % n == n-1: # if you are all the way to the right
+            directions.remove('Right')
+        if x - n < 0: # if you are at the top
+            directions.remove('Up')
+        if x + n > n*n - 1: # if you are at the bottom
+            directions.remove('Down')
+
+        return directions
