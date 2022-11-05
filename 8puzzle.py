@@ -208,3 +208,7 @@ class State:
         solve.reverse()
         return solve
     
+    # reshapes the output for the current state of the matrix into a 3x3
+    def print_state(self):
+        arr =np.reshape(self.state,(3,3))
+        print(arr)
