@@ -195,3 +195,16 @@ class State:
                 temp[x], temp[x + n] = temp[x + n], temp[x]
             children.append(State(temp, self, direction, self.depth + 1, 1))
         return children
+    
+    # this is for node traversal
+    def solve(self):
+        solve = []
+        solve.append(self.direction)
+        path = self
+        while path.parent!= None:
+            path = path.parent
+            solve.append(path.direction)
+        solve = solve[:-1]
+        solve.reverse()
+        return solve
+    
