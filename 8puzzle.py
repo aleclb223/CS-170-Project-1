@@ -129,3 +129,19 @@ class State:
         if self.state == self.final_state:
             return True
         return False
+    
+    def Misplaced_Tiles(self,n):
+        counter =0
+        self.heuristic = 0
+        global h
+        
+        for i in range(9):
+            for j in range(9):
+                if (self.state[i] != self.final_state[j]):
+                    counter += 1
+                self.heuristic = self.heuristic + counter
+        self.AStar_evaluation_mis = self.heuristic
+        h+=1
+        self.greedy_evaluation = self.heuristic
+            
+        return(counter,self.greedy_evaluation,self.AStar_evaluation_mis)
