@@ -219,6 +219,7 @@ class State:
 
 #https://www.geeksforgeeks.org/8-puzzle-problem-using-branch-and-bound/
 #https://github.com/Pariasrz/N-Puzzle-solver-with-Search-Algorithms/blob/main/Main.py
+#https://www.geeksforgeeks.org/check-instance-8-puzzle-solvable/
 # Used templates solvable, inv_num
 def main():
     #start = root
@@ -265,3 +266,20 @@ def main():
 
     else:
         print("Not solvable")
+        
+# inversions. function to count inversions in the array
+def inv_num(puzzle):
+    inv = 0
+    for i in range(len(puzzle)-1):
+        for j in range(i+1 , len(puzzle)):
+            if (( puzzle[i] > puzzle[j]) and puzzle[i] and puzzle[j]):
+                inv += 1
+    return inv
+
+def solvable(puzzle): # check if initial state puzzle is solvable: number of inversions should be even.
+    inv_counter = inv_num(puzzle)
+    if (inv_counter %2 ==0):
+        return True
+    return False
+
+main()
